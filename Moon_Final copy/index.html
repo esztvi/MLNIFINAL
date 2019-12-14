@@ -1,0 +1,106 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>benignity</title>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.min.js"></script>
+  <script src="https://unpkg.com/ml5@0.3.1/dist/ml5.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+  <div class="area">
+
+  </div>
+
+  <h2>benignity - the benign-ness of something</h2>
+  <h3>watch as life continues on a different wavelength</h3>
+  <h3>than the treatment regimen ...</h3>
+  <div id="videoContainer"></div>
+  <p id="status">Loading carcinogens...</p>
+  <div>
+    <button id="load">Load CANCER</button><br />
+    <!-- <p>If you load this sample classifer dataset. Try to make Brain, Neck, or Liver gestures to see if the classifier can class them.<br />
+      If this sample dataset doesn't work well for you, you could train your own classifier,<br />
+      and use the 'Save Dataset' button below to create your own myKNNDataset.json file,<br />
+      and replace the myKNNDataset.json in this folder.'style="display:none;"
+    </p> -->
+  </div>
+  <div style="display:none;" >
+  <br /><p>
+    <span class="emoji"> Brain </span><button id="addClassBrain">Add an Example to Class Brain</button>
+    <button id="resetBrain">Reset Class Brain</button>
+    </p><p><span id="exampleBrain">0</span> Brain examples</p>
+    <p>| Confidence in Brain is: <span id="confidenceBrain">0</span></p>
+
+    <br /><span class="emoji"> Neck </span><button id="addClassNeck">Add an Example to Class Neck</button>
+    <button id="resetNeck">Reset Class Neck</button>
+    <p><span id="exampleNeck">0</span> Neck examples</p>
+    <p>| Confidence in Neck is: <span id="confidenceNeck">0</span></p>
+
+    <br /><span class="emoji"> Liver </span><button id="addClassLiver">Add an Example to Class Liver</button>
+    <button id="resetLiver">Reset Class Liver</button>
+    <p><span id="exampleLiver">0</span> Liver examples</p>
+    <p>| Confidence in Liver is: <span id="confidenceLiver">0</span></p>
+
+    <br /><span class="emoji"> Kidney </span><button id="addClassKidney">Add an Example to Class Kidney</button>
+    <button id="resetKidney">Reset Class Kidney</button>
+    <p><span id="exampleKidney">0</span> Kidney examples</p>
+    <p>| Confidence in Kidney is: <span id="confidenceKidney">0</span></p>
+
+    <br /><span class="emoji"> Breast </span><button id="addClassBreast">Add an Example to Class Breast</button>
+    <button id="resetBreast">Reset Class Breast</button>
+    <p><span id="exampleBreast">0</span> Breast examples</p>
+    <p>| Confidence in Breast is: <span id="confidenceBreast">0</span></p>
+
+    <br /><span class="emoji"> Lung </span><button id="addClassLung">Add an Example to Class Lung</button>
+    <button id="resetLung">Reset Class Lung</button>
+    <p><span id="exampleLung">0</span> Lung examples</p>
+    <p>| Confidence in Lung is: <span id="confidenceLung">0</span></p>
+
+    <br /><span class="emoji"> Stomach </span><button id="addClassStomach">Add an Example to Class Stomach</button>
+    <button id="resetStomach">Reset Class Stomach</button>
+    <p><span id="exampleStomach">0</span> Stomach examples</p>
+    <p>| Confidence in Stomach is: <span id="confidenceStomach">0</span></p>
+
+    <br /><span class="emoji"> Colon </span><button id="addClassColon">Add an Example to Class Colon</button>
+    <button id="resetColon">Reset Class Colon</button>
+    <p><span id="exampleColon">0</span> Colon examples</p>
+    <p>| Confidence in Colon is: <span id="confidenceColon">0</span></p>
+
+    <br /><span class="emoji"> Ovarian </span><button id="addClassOvarian">Add an Example to Class Ovarian</button>
+    <button id="resetOvarian">Reset Class Ovarian</button>
+    <p><span id="exampleOvarian">0</span> Ovarian examples</p>
+    <p>| Confidence in Ovarian is: <span id="confidenceOvarian">0</span></p>
+
+    <br /><span class="emoji"> Bone </span><button id="addClassBone">Add an Example to Class Bone</button>
+    <button id="resetBone">Reset Class Bone</button>
+    <p><span id="exampleBone">0</span> Bone examples</p>
+    <p>| Confidence in Bone is: <span id="confidenceBone">0</span></p>
+
+    <br /><span class="emoji"> Hodgkin Lymphoma </span><button id="addClassHodgkinLymphoma">Add an Example to Class Hodgkin Lymphoma</button>
+    <button id="resetHodgkinLymphoma">Reset Class Hodgkin Lymphoma</button>
+    <p><span id="exampleHodgkinLymphoma">0</span> Hodgkin Lymphoma examples</p>
+    <p>| Confidence in Hodgkin Lymphoma is: <span id="confidenceHodgkinLymphoma">0</span></p>
+
+    <br /><span class="emoji"> Non-Hodgkin Lymphoma </span><button id="addClassNonHodgkinLymphoma">Add an Example to Class Non-Hodgkin Lymphoma</button>
+    <button id="resetNonHodgkinLymphoma">Reset Class Non-Hodgkin Lymphoma</button>
+    <p><span id="exampleNonHodgkinLymphoma">0</span> Non-Hodgkin Lymphoma examples</p>
+    <p>| Confidence in Non-Hodgkin Lymphoma is: <span id="confidenceNonHodgkinLymphoma">0</span></p>
+  <br />
+</div>
+  <p>
+    <button id="buttonPredict">Start diagnostics!</button><br />
+    <button id="clearAll" style="display:none;">Clear all classes</button><br />
+  </p>
+  <p>
+    Identified: <span id="result">...</span>
+    cancer with a confidence of <span id="confidence">...</span>
+  </p>
+  <div style="display:none;"><button id="save">Save Dataset</button></div>
+  <script src="sketch.js"></script>
+</body>
+
+</html>
